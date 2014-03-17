@@ -1,0 +1,50 @@
+@CHARSET "US-ASCII";
+
+.formtable {
+	width: 400px;
+	padding: 10px;
+	border: 1px solid blue;
+}
+
+.offerstable {
+	padding: 10px;
+}
+
+input[type=text] {
+	width: 250px;
+	
+}
+
+textarea {
+	width: 250px;
+	height: 300px;
+}
+
+.label {
+	text-align: right;
+	vertical-align: top;
+}
+
+.control {
+	margin-left: 10px;
+}
+
+.error {
+	font-size: small;
+	color: red;
+	margin-left: 10px;
+}
+
+thead {
+	text-align:center;
+	font-weight: bold;
+}
+
+table td {
+	border: 1px solid gray;
+	background-color: #99FFFF;	
+}
+
+thead tr td {
+	background-color: #66CCFF;
+}
