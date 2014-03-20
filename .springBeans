@@ -9,6 +9,7 @@
 	<configs>
 		<config>WebContent/WEB-INF/offers-servlet.xml</config>
 		<config>src/com/diamond/iain/spring/web/config/security-context.xml</config>
+		<config>test/com/diamond/iain/spring/web/test/config/datasource.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

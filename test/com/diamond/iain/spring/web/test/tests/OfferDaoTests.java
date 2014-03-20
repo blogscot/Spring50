@@ -76,10 +76,19 @@ public class OfferDaoTests {
 		assertEquals("Updated offer should match retrieved updated offer",
 				offer, updated);
 
+		// Test Offer
+		Offer offer2 = new Offer(user, "This is a test offer.");
+		
+		assertTrue("Offer2 creation should return true", offersDao.create(offer2));
+		
+		List<Offer> userOffers = offersDao.getOffers();
+		assertEquals("Should be two offers for user.", 2, userOffers.size());
+		
+		// Test deletion
 		offersDao.delete(offer.getId());
 
-		List<Offer> empty = offersDao.getOffers();
-
-		assertEquals("Offers lists should be empty.", 0, empty.size());
+		List<Offer> finalList = offersDao.getOffers();
+		
+		assertEquals("Offers lists should contain 1 offer.", 1, finalList.size());
 	}
 }
