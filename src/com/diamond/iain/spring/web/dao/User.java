@@ -22,6 +22,8 @@ public class User {
 	@ValidEmail
 	private String email;
 
+	@NotBlank
+	@Size(min = 5, max = 60)
 	private String name;
 
 	private boolean enabled = false;
