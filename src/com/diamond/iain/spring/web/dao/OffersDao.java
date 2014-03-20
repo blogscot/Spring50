@@ -28,28 +28,35 @@ public class OffersDao {
 
 	public List<Offer> getOffers() {
 
-		return jdbc.query("select * from offers", new RowMapper<Offer>() {
+		return jdbc
+				.query("select * from offers, users where offers.username=users.username and users.enabled=true",
+						new RowMapper<Offer>() {
 
-			public Offer mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Offer offer = new Offer();
+							public Offer mapRow(ResultSet rs, int rowNum)
+									throws SQLException {
 
-				offer.setId(rs.getInt("id"));
-				offer.setName(rs.getString("name"));
-				offer.setText(rs.getString("text"));
-				offer.setEmail(rs.getString("email"));
+								User user = new User();
+								user.setAuthority(rs.getString("authority"));
+								user.setEmail(rs.getString("email"));
+								user.setEnabled(true);
+								user.setName(rs.getString("name"));
+								user.setUsername(rs.getString("username"));
 
-				return offer;
-			}
-		});
+								Offer offer = new Offer();
+								offer.setId(rs.getInt("id"));
+								offer.setText(rs.getString("text"));
+								offer.setUser(user);
+
+								return offer;
+							}
+						});
 	}
 
 	public boolean update(Offer offer) {
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(
 				offer);
 
-		return jdbc
-				.update("update offers set name=:name, text=:text, email=:email where id=:id",
-						params) == 1;
+		return jdbc.update("update offers set text=:text where id=:id", params) == 1;
 	}
 
 	public boolean create(Offer offer) {
@@ -58,7 +65,7 @@ public class OffersDao {
 				offer);
 
 		return jdbc
-				.update("insert into offers (name, text, email) values (:name, :text, :email)",
+				.update("insert into offers (username, text) values (:username, :text)",
 						params) == 1;
 	}
 
@@ -70,7 +77,7 @@ public class OffersDao {
 
 		return jdbc
 				.batchUpdate(
-						"insert into offers (id, name, text, email) values (:id, :name, :text, :email)",
+						"insert into offers (username, text) values (:username, :text)",
 						params);
 	}
 
@@ -85,17 +92,22 @@ public class OffersDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", id);
 
-		return jdbc.queryForObject("select * from offers where id=:id", params,
+		return jdbc.queryForObject("select * from offers, users where offers.username=users.username and users.enabled=true", params,
 				new RowMapper<Offer>() {
 
 					public Offer mapRow(ResultSet rs, int rowNum)
 							throws SQLException {
-						Offer offer = new Offer();
+						User user = new User();
+						user.setAuthority(rs.getString("authority"));
+						user.setEmail(rs.getString("email"));
+						user.setEnabled(true);
+						user.setName(rs.getString("name"));
+						user.setUsername(rs.getString("username"));
 
+						Offer offer = new Offer();
 						offer.setId(rs.getInt("id"));
-						offer.setName(rs.getString("name"));
 						offer.setText(rs.getString("text"));
-						offer.setEmail(rs.getString("email"));
+						offer.setUser(user);
 
 						return offer;
 					}
