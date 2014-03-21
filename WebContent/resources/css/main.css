@@ -40,11 +40,6 @@ thead {
 	font-weight: bold;
 }
 
-table td {
-	border: 1px solid gray;
-	background-color: #99FFFF;	
-}
-
 thead tr td {
 	background-color: #66CCFF;
 }

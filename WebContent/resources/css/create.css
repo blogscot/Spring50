@@ -90,3 +90,11 @@ a.login {
 	text-decoration:none;	
 }
 
+table td {
+	border: 1px solid gray;
+	background-color: #99FFFF;	
+}
+
+#deletecontrol {
+	border: 1px solid red;
+}

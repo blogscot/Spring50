@@ -18,52 +18,69 @@ import com.diamond.iain.spring.web.service.OffersService;
 
 @Controller
 public class OffersController {
-	
+
 	private OffersService offersService;
-	
+
 	@Autowired
 	public void setOffersService(OffersService offersService) {
 		this.offersService = offersService;
 	}
-	
-	@RequestMapping(value="/test", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String showTest(Model model, @RequestParam("id") String id) {
-		//System.out.println("Id is: " + id);
+		// System.out.println("Id is: " + id);
 		return "home";
 	}
 
 	@RequestMapping("/offers")
 	public String showOffers(Model model) {
-		
-		//offersService.throwTestException();
-		
+
+		// offersService.throwTestException();
+
 		List<Offer> offers = offersService.getCurrent();
-		
+
 		model.addAttribute("offers", offers);
-		
+
 		return "offers";
 	}
-	
+
 	@RequestMapping("/createoffer")
-	public String createOffer(Model model) {
-	
-		model.addAttribute("offer", new Offer());
-		
+	public String createOffer(Model model, Principal principal) {
+
+		Offer offer = null;
+
+		if (principal != null) {
+			String username = principal.getName();
+
+			offer = offersService.getOffer(username);
+		}
+
+		if (offer == null) {
+			offer = new Offer();
+		}
+
+		model.addAttribute("offer", offer);
+
 		return "createoffer";
 	}
-	
-	@RequestMapping(value="/docreate", method=RequestMethod.POST)
-	public String doCreate(Model model, @Valid Offer offer, BindingResult result, Principal principal) {
-		
-		if(result.hasErrors()) {
+
+	@RequestMapping(value = "/docreate", method = RequestMethod.POST)
+	public String doCreate(Model model, @Valid Offer offer,
+			BindingResult result, Principal principal,
+			@RequestParam(value = "delete", required = false) String delete) {
+
+		if (result.hasErrors()) {
 			return "createoffer";
 		}
-		
-		String username = principal.getName();
-		offer.getUser().setUsername(username);
-		
-		offersService.create(offer);
-		
-		return "offercreated";
+
+		if (delete == null) {
+			String username = principal.getName();
+			offer.getUser().setUsername(username);
+			offersService.update(offer);
+			return "offercreated";
+		} else {
+			offersService.delete(offer.getId());
+			return "offerdeleted";
+		}
 	}
 }

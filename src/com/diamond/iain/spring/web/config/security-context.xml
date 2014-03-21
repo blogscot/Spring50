@@ -24,6 +24,8 @@
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/offercreated"
 			access="isAuthenticated()" />
+		<security:intercept-url pattern="/offerdeleted"
+			access="isAuthenticated()" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/static/**"
 			access="permitAll" />
@@ -54,7 +56,7 @@
 	</security:http>
 	<security:global-method-security
 		secured-annotations="enabled"></security:global-method-security>
-		
+
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.password.StandardPasswordEncoder">
 	</bean>

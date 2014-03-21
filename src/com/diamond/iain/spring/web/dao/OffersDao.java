@@ -83,4 +83,5 @@ public class OffersDao {
 						"select * from offers, users where offers.username=users.username and users.enabled=true",
 						params, new OfferRowMapper());
 	}
+
 }
