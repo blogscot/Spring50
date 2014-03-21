@@ -2,6 +2,7 @@ package com.diamond.iain.spring.web.test.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
@@ -72,22 +73,14 @@ public class UserDaoTests {
 	
 	}
 	
-	// TODO reimplement this
 	@Test
-	public void testUsers() {
-		User user = new User("johnwpurcell", "John Purcell", "hellothere",
-				"john@caveofprogramming.com", true, "ROLE_USER");
+	public void testExists(){
 
-		usersDao.create(user);
-
-		List<User> users = usersDao.getAllUsers();
-
-		assertEquals("Number of users should be 1.", 1, users.size());
-
-		assertTrue("User should exist.", usersDao.exists(user.getUsername()));
-
-		assertEquals("Created user should be identical to retrieved user",
-				user, users.get(0));
+		usersDao.create(user1);
+		usersDao.create(user2);
+		usersDao.create(user3);
+		
+		assertTrue("User should exist.", usersDao.exists(user2.getUsername()));
+		assertFalse("User should not exist.", usersDao.exists("Vlad"));
 	}
-
 }

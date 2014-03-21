@@ -2,30 +2,23 @@ package com.diamond.iain.spring.web.dao;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 @Transactional
 @Component("usersDao")
 public class UsersDao {
 
-	private NamedParameterJdbcTemplate jdbc;
-
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	public void setDataSource(DataSource jdbc) {
-		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
-	}
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -42,8 +35,12 @@ public class UsersDao {
 	}
 
 	public boolean exists(String username) {
-		return jdbc.queryForObject("select count(*) from users where username=:username", 
-				new MapSqlParameterSource("username", username), Integer.class) > 0;
+		Criteria crit = session().createCriteria(User.class);
+		crit.add(Restrictions.idEq(username));
+		User user = (User)crit.uniqueResult();
+		
+		return user != null;
+
 	}
 
 	@SuppressWarnings("unchecked")
