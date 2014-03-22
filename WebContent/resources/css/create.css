@@ -2,7 +2,6 @@
 
 .formtable {
 	width: 400px;
-	padding: 10px;
 	border: 1px solid blue;
 }
 
@@ -10,6 +9,12 @@
 {
 	width: 450px;
 	padding: 10px;
+	border: 1px solid blue;
+}
+
+#messagetable
+{
+	width: 450px;
 	border: 1px solid blue;
 }
 
@@ -26,12 +31,18 @@ input[type="password"]
 input[type="text"]
 {
 	width: 250px;
-	background-color: #66ee66;
+	background-color: #aaee66;
 }
 
-textarea {
+.textarea {
+	width: 280px;
+	height: 300px;
+}
+
+#messagetextarea {
 	width: 250px;
 	height: 300px;
+	background-color: #aaee66;
 }
 
 .label {

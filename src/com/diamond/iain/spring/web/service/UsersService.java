@@ -6,18 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
+import com.diamond.iain.spring.web.dao.Message;
+import com.diamond.iain.spring.web.dao.MessagesDao;
 import com.diamond.iain.spring.web.dao.User;
 import com.diamond.iain.spring.web.dao.UsersDao;
 
-@Service("UsersService")
+@Service("usersService")
 public class UsersService {
 	
+	@Autowired
 	private UsersDao usersDao;
 	
 	@Autowired
-	public void setOffersDao(UsersDao usersDao) {
-		this.usersDao = usersDao;
-	}
+	private MessagesDao messagesDao;
+	
 
 	public void create(User user) {
 		usersDao.create(user);
@@ -32,5 +34,7 @@ public class UsersService {
 		return usersDao.getAllUsers();
 	}
 	
-	
+	public void sendMessage(Message message) {
+		messagesDao.saveOrUpdate(message);
+	}
 }
