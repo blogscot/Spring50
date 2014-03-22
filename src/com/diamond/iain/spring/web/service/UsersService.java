@@ -37,4 +37,8 @@ public class UsersService {
 	public void sendMessage(Message message) {
 		messagesDao.saveOrUpdate(message);
 	}
+	
+	public User getUser(String username) {
+		return usersDao.getUser(username);
+	}
 }

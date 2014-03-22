@@ -15,7 +15,7 @@
 		<tr>
 			<td class="label">Your name:</td>
 			<td><sf:input class="control" name="name" type="text"
-					path="name" /><br />
+					value="${fromName}" path="name" /><br />
 				<div class="error">
 					<sf:errors path="name"></sf:errors>
 				</div></td>
@@ -23,7 +23,7 @@
 		<tr>
 			<td class="label">Your email:</td>
 			<td><sf:input class="control" name="email" type="text"
-					path="email" /><br />
+					value="${fromEmail}" path="email" /><br />
 				<div class="error">
 					<sf:errors path="email"></sf:errors>
 				</div></td>
