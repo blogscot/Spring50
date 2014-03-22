@@ -1,8 +1,6 @@
 package com.diamond.iain.spring.web.test.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
@@ -17,6 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.diamond.iain.spring.web.dao.Message;
+import com.diamond.iain.spring.web.dao.MessagesDao;
 import com.diamond.iain.spring.web.dao.User;
 import com.diamond.iain.spring.web.dao.UsersDao;
 
@@ -26,7 +26,10 @@ import com.diamond.iain.spring.web.dao.UsersDao;
 		"classpath:com/diamond/iain/spring/web/config/security-context.xml",
 		"classpath:com/diamond/iain/spring/web/test/config/datasource.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserDaoTests {
+public class MessageDaoTests {
+
+	@Autowired
+	private MessagesDao messagesDao;
 
 	@Autowired
 	private UsersDao usersDao;
@@ -34,6 +37,7 @@ public class UserDaoTests {
 	@Autowired
 	private DataSource dataSource;
 
+	// Some Pre-prepared Test Data
 	private User user1 = new User("VladtheImpaler", "Vlad Impaler",
 			"deathtotheinfidel", "vlad@caveofprogramming.com", true,
 			"ROLE_ADMIN");
@@ -55,33 +59,21 @@ public class UserDaoTests {
 	}
 
 	@Test
-	public void testCreateRetrieve() {
+	public void testSave() {
 		usersDao.create(user1);
-		
-		List<User> users = usersDao.getAllUsers();
-		
-		assertEquals("One user should have been created and retrieved", 1, users.size());
-	
-		assertEquals("Inserted user should match retrieved", user1, users.get(0));
-
 		usersDao.create(user2);
 		usersDao.create(user3);
 		usersDao.create(user4);
 
-		users = usersDao.getAllUsers();
-
-		assertEquals("Four users should have been created and retrieved", 4, users.size());
-	
-	}
-	
-	@Test
-	public void testExists(){
-
-		usersDao.create(user1);
-		usersDao.create(user2);
-		usersDao.create(user3);
+		Message message = new Message("Run!",
+				"Smash the hobbit!", "Vlad Impaler",
+				"vlad@caveofprogramming.com", "Bilbo");
 		
-		assertTrue("User should exist.", usersDao.exists(user2.getUsername()));
-		assertFalse("User should not exist.", usersDao.exists("Vlad"));
+		messagesDao.saveOrUpdate(message);
+		
+		List<Message> messages = messagesDao.getMessages();
+
+		assertEquals("One message should have been created and retrieved", 1,
+				messages.size());
 	}
 }

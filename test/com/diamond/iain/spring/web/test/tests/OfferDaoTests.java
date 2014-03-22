@@ -38,7 +38,6 @@ public class OfferDaoTests {
 	@Autowired
 	private DataSource dataSource;
 
-	
 	// Some Pre-prepared Test Data
 	private User user1 = new User("VladtheImpaler", "Vlad Impaler",
 			"deathtotheinfidel", "vlad@caveofprogramming.com", true,
@@ -67,6 +66,7 @@ public class OfferDaoTests {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 
 		jdbc.execute("delete from offers");
+		jdbc.execute("delete from messages");
 		jdbc.execute("delete from users");
 	}
 
