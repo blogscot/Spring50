@@ -35,7 +35,7 @@ public class MessagesDao {
 	public List<Message> getMessages(String username) {
 		Criteria crit = session().createCriteria(Message.class);
 
-		crit.add(Restrictions.eq("u.username", username));
+		crit.add(Restrictions.eq("username", username));
 		
 		return crit.list();
 	}

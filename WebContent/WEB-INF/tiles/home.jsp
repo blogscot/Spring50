@@ -21,22 +21,3 @@
 	</c:forEach>
 </table>
 
-<c:choose>
-	<c:when test="${hasOffer}">
-		<p>
-			<a href="${pageContext.request.contextPath}/createoffer">Edit Offer</a>
-		</p>
-	</c:when>
-	<c:otherwise>
-		<p>
-			<a href="${pageContext.request.contextPath}/createoffer">Add New Offer.</a>
-		</p>
-	</c:otherwise>
-</c:choose>
-
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-	<p>
-		<a href="<c:url value='/admin'/> ">Admin.</a>
-	</p>
-</sec:authorize>
-

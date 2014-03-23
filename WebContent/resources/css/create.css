@@ -5,15 +5,13 @@
 	border: 1px solid blue;
 }
 
-#newAccounttable
-{
+#newAccounttable {
 	width: 450px;
 	padding: 10px;
 	border: 1px solid blue;
 }
 
-#messagetable
-{
+#messagetable {
 	width: 450px;
 	border: 1px solid blue;
 }
@@ -22,14 +20,12 @@
 	padding: 10px;
 }
 
-input[type="password"]
-{
+input[type="password"] {
 	width: 250px;
 	background-color: #66ee66;
 }
 
-input[type="text"]
-{
+input[type="text"] {
 	width: 250px;
 	background-color: #aaee66;
 }
@@ -57,7 +53,7 @@ input[type="text"]
 #matchmsg {
 	font-size: small;
 	color: red;
-	margin-left: 10px;	
+	margin-left: 10px;
 }
 
 .error {
@@ -76,7 +72,7 @@ input[type="text"]
 }
 
 #content {
-	position:relative;
+	position: relative;
 	padding: 40px;
 }
 
@@ -90,22 +86,37 @@ div.headertitle {
 
 a.login {
 	position: absolute;
-	top:10px;
-	right:10px;
-	color:white;
+	top: 10px;
+	right: 10px;
+	color: white;
 }
 
 #title {
-	color:white;
-	font-size:30px;
-	text-decoration:none;	
+	color: white;
+	font-size: 30px;
+	text-decoration: none;
 }
 
 table td {
 	border: 1px solid gray;
-	background-color: #99FFFF;	
+	background-color: #99FFFF;
 }
 
 #deletecontrol {
 	border: 1px solid red;
+}
+
+.usermessage {
+	color: black;
+	margin-bottom: 10px;	
+}
+
+.messagecontent {
+	display:block;
+}
+
+.messagesubject {
+	color: #c82800;
+	font-weight: bold;
+	font-style: italic;
 }

@@ -9,10 +9,7 @@
 
 <link href="${pageContext.request.contextPath}/static/css/create.css"
 	rel="stylesheet" type="text/css" />
-	
-<link href="${pageContext.request.contextPath}/static/css/main.css"
-	rel="stylesheet" type="text/css" />
-		
+
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/static/script/jquery.js"></script>
 
@@ -23,6 +20,9 @@
 	<div id="header">
 		<tiles:insertAttribute name="header" />
 	</div>
+
+	<tiles:insertAttribute name="toolbar" />
+
 	<div id="content">
 		<tiles:insertAttribute name="content" />
 	</div>

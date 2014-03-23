@@ -1,6 +1,11 @@
 package com.diamond.iain.spring.web.controllers;
 
+
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -10,8 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.diamond.iain.spring.web.dao.FormValidationGroup;
+import com.diamond.iain.spring.web.dao.Message;
 import com.diamond.iain.spring.web.dao.User;
 import com.diamond.iain.spring.web.service.UsersService;
 
@@ -33,6 +40,11 @@ public class LoginController {
 	@RequestMapping("/denied")
 	public String showDenied() {
 		return "denied";
+	}
+	
+	@RequestMapping("/messages")
+	public String showMessages() {
+		return "messages";
 	}
 	
 	@RequestMapping("/admin")
@@ -79,5 +91,26 @@ public class LoginController {
 		}
 
 		return "accountcreated";
+	}
+	
+	@RequestMapping(value="/getmessages", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public Map<String, Object> getMessages(Principal principal) {
+		
+		List<Message> messages = null;
+		
+		if (principal == null) {
+		  messages = new ArrayList<Message>();	
+		}
+		else {
+			String username = principal.getName();
+			messages = usersService.getMessages(username);
+		}
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("messages", messages);
+		data.put("number", messages.size());
+		
+		return data;
 	}
 }
