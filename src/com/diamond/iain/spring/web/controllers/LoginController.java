@@ -9,10 +9,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +29,9 @@ import com.diamond.iain.spring.web.service.UsersService;
 public class LoginController {
 
 	private UsersService usersService;
+	
+	@Autowired
+	private MailSender mailSender;
 
 	@Autowired
 	public void setUsersService(UsersService usersService) {
@@ -112,5 +118,35 @@ public class LoginController {
 		data.put("number", messages.size());
 		
 		return data;
+	}
+	
+	@RequestMapping(value="/sendmessage", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public Map<String, Object> sendMessage(Principal principal, @RequestBody Map<String, Object> data) {
+	
+		String text = (String)data.get("text");
+		String name = (String)data.get("name");
+		String email = (String)data.get("email");
+		Integer target = (Integer)data.get("target");
+		
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		
+		mailMessage.setFrom("iain@blogscot.com");
+		mailMessage.setTo(email);
+		mailMessage.setSubject("Re: " + name + ", your message");
+		mailMessage.setText(text);
+		
+		try {
+			mailSender.send(mailMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Can't send message");
+		}
+		
+		Map<String, Object> rval = new HashMap<>();
+		rval.put("success", true);
+		rval.put("target", target);
+		
+		return rval;
 	}
 }

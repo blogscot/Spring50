@@ -72,4 +72,15 @@
 	<bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 	</bean>
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.blogscot.co.uk"></property>
+	<property name="port" value="587"></property>
+	<property name="username" value="iain@blogscot.co.uk"></property>
+	<property name="password" value="thisisnotmypassword"></property>
+	<property name="javaMailProperties">
+		<props merge="true" value-type="mail.smtp.auth"></props>
+		
+	</property>
+	</bean>
 </beans>
